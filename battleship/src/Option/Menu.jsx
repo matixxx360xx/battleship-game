@@ -1,8 +1,11 @@
 import { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import './Menu.css'
 import waves from '/public/waves.mp4';
 
 export default function Menu() {
+  const navigate = useNavigate();
+
   return (
    
 <div className="scene">
@@ -16,7 +19,7 @@ export default function Menu() {
           <span className="badge">
             <svg viewBox="0 0 24 24"><path d="M4 15 L20 15 L18 20 L6 20 Z"/><path d="M12 15 V5"/><path d="M12 6 L18 10 L12 12 Z"/><path d="M12 6 L7 9 L12 11 Z" fill="var(--gold-line)"/></svg>
           </span>
-          <span className="label">Graj</span>
+          <span className="label" onClick={() => navigate("/game")}>Graj</span>
         </button>
 
         <button className="item">

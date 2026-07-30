@@ -1,0 +1,66 @@
+.scene {
+     position: relative;
+     width: 100%;
+     height: 100vh;
+     min-height: 560px;
+
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+}
+
+
+.Player,
+.Enemy {
+     position: relative;
+     z-index: 1;
+     text-align: center;
+}
+
+
+.Player h1,
+.Enemy h1 {
+     color: white;
+     font-size: 40px;
+     margin-bottom: 20px;
+}
+
+
+.playerBoard,
+.enemyBoard {
+     width: 500px;
+     height: 500px;
+     display: grid;
+     grid-template-columns: repeat(10, 1fr);
+     grid-template-rows: repeat(10, 1fr);
+     border: 4px solid black;
+
+     background:  rgba(255,255,255,0.15);
+     backdrop-filter: blur(5px);
+}
+
+
+.playerBoard span,
+.enemyBoard span {
+     display: flex;
+     border: 1px solid rgba(255,255,255,0.3);
+     background: rgba(80,150,200,0.3);
+     transition: 0.2s;
+}
+
+
+.playerBoard span:hover,
+.enemyBoard span:hover {
+     background: rgba(255,255,255,0.5);
+     cursor: pointer;
+}
+
+.Player {
+ top: 10px;
+ left: -200px;
+}
+
+.Enemy {
+ top: 10px;
+ left: 200px;
+}
