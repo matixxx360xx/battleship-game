@@ -47,28 +47,77 @@ export default function Game() {
   }
 
   function placeShips() {
-    let coordinate = 0;
-    let x = 0;
-    let y = 0;
-    for(let i = 0; i < 5; i++){
-        coordinate = Math.floor(Math.random() * 2) + 1;
-        //vertically
-        if(coordinate%2 == 0){
-          
-        }
-        //horizontally
-        else {
-          
-        }
+  let coordinate = 0;
+  let x = 0;
+  let y = 0;
+
+  for (let i = 0; i < 5; i++) {
+    coordinate = Math.floor(Math.random() * 2);
+
+    // vertical 
+    if (coordinate === 0) {
+      y = Math.floor(Math.random() * 10);
+
+      do {
+        x = Math.floor(Math.random() * 10);
+      } while (x + ship[i].size > 10 || !canPlaceShip(x, y, ship[i].size, coordinate));
+
+
+      for (let j = 0; j < ship[i].size; j++) {
+        playerBoard[x + j][y] = 1;
+      }
+
+    } 
+
+    // horizontal 
+    else {
+      x = Math.floor(Math.random() * 10);
+
+      do {
+        y = Math.floor(Math.random() * 10);
+      } while (y + ship[i].size > 10 || !canPlaceShip(x, y, ship[i].size, coordinate));
+
+      for (let j = 0; j < ship[i].size; j++) {
+        playerBoard[x][y + j] = 1;
+      }
+
     }
-    console.log(playerBoard)
-  }placeShips()
+  }
+
+  console.log(playerBoard);
+}
+
+function canPlaceShip(x, y, size, coordinate) {
+
+  for (let j = 0; j < size; j++) {
+
+    if (coordinate === 0) {
+      // vertical
+      if (playerBoard[x + j][y] !== 0) {
+        return false;
+      }
+    } else {
+      // horizontal
+      if (playerBoard[x][y + j] !== 0) {
+        return false;
+      }
+    }
+
+  }
+
+  return true;
+}
 
   useEffect(() => {
-
     PlayerBoard();
     EnemyBoard();
   }, []);
+
+  useEffect(() => {
+    if (playerBoard.length === 10) {
+      placeShips();
+    }
+  }, [playerBoard]);
 
   return (
 
