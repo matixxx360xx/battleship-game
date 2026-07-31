@@ -5,6 +5,7 @@ import waves from '/public/waves.mp4';
 export default function Game() {
   const [playerBoard, setPlayerBoard] = useState([])
   const [enemyBoard, setEnemyBoard] = useState([])
+  const [shipsPlaced, setShipsPlaced] = useState(false);
 
   const [ship, setShip] = useState([
     { name: "carrier", size: 5 },
@@ -46,67 +47,197 @@ export default function Game() {
     setEnemyBoard(board);
   }
 
-  function placeShips() {
-  let coordinate = 0;
-  let x = 0;
-  let y = 0;
+  function placeShipsPlayer() {
+    let coordinate = 0;
+    let x = 0;
+    let y = 0;
 
-  for (let i = 0; i < 5; i++) {
-    coordinate = Math.floor(Math.random() * 2);
+    for (let i = 0; i < 5; i++) {
+      coordinate = Math.floor(Math.random() * 2);
 
-    // vertical 
-    if (coordinate === 0) {
-      y = Math.floor(Math.random() * 10);
+      // vertical 
+      if (coordinate === 0) {
 
-      do {
-        x = Math.floor(Math.random() * 10);
-      } while (x + ship[i].size > 10 || !canPlaceShip(x, y, ship[i].size, coordinate));
+        do {
+          x = Math.floor(Math.random() * 10);
+          y = Math.floor(Math.random() * 10);
+
+        } while (x + ship[i].size > 10 || !canPlaceShipPlayer(x, y, ship[i].size, coordinate));
 
 
-      for (let j = 0; j < ship[i].size; j++) {
-        playerBoard[x + j][y] = 1;
+        for (let j = 0; j < ship[i].size; j++) {
+          playerBoard[x + j][y] = 1;
+        }
+
       }
+      // horizontal 
+      else {
+        do {
+          x = Math.floor(Math.random() * 10);
+          y = Math.floor(Math.random() * 10);
 
-    } 
+        } while (y + ship[i].size > 10 || !canPlaceShipPlayer(x, y, ship[i].size, coordinate));
 
-    // horizontal 
-    else {
-      x = Math.floor(Math.random() * 10);
+        for (let j = 0; j < ship[i].size; j++) {
+          playerBoard[x][y + j] = 1;
+        }
 
-      do {
-        y = Math.floor(Math.random() * 10);
-      } while (y + ship[i].size > 10 || !canPlaceShip(x, y, ship[i].size, coordinate));
-
-      for (let j = 0; j < ship[i].size; j++) {
-        playerBoard[x][y + j] = 1;
-      }
-
-    }
-  }
-
-  console.log(playerBoard);
-}
-
-function canPlaceShip(x, y, size, coordinate) {
-
-  for (let j = 0; j < size; j++) {
-
-    if (coordinate === 0) {
-      // vertical
-      if (playerBoard[x + j][y] !== 0) {
-        return false;
-      }
-    } else {
-      // horizontal
-      if (playerBoard[x][y + j] !== 0) {
-        return false;
       }
     }
 
+    setPlayerBoard([...playerBoard]);
   }
 
-  return true;
-}
+
+  function canPlaceShipPlayer(x, y, size, coordinate) {
+
+    for (let j = 0; j < size; j++) {
+
+      if (coordinate === 0) {
+        // pionowo
+        if (playerBoard[x + j][y] !== 0) {
+          return false;
+        }
+
+        if (!checkAroundPlayer(x + j, y)) {
+          return false;
+        }
+
+      } else {
+        // poziomo
+        if (playerBoard[x][y + j] !== 0) {
+          return false;
+        }
+
+        if (!checkAroundPlayer(x, y + j)) {
+          return false;
+        }
+      }
+
+    }
+
+    return true;
+  }
+
+  function checkAroundPlayer(x, y) {
+
+    if (x > 0 && playerBoard[x - 1][y] === 1) {
+      return false;
+    }
+
+    if (x < 9 && playerBoard[x + 1][y] === 1) {
+      return false;
+    }
+
+    if (y > 0 && playerBoard[x][y - 1] === 1) {
+      return false;
+    }
+
+    if (y < 9 && playerBoard[x][y + 1] === 1) {
+      return false;
+    }
+
+    return true;
+  }
+
+
+  function placeShipsEnemy() {
+    let coordinate = 0;
+    let x = 0;
+    let y = 0;
+
+    for (let i = 0; i < 5; i++) {
+      coordinate = Math.floor(Math.random() * 2);
+
+      if (coordinate === 0) {
+
+        do {
+          x = Math.floor(Math.random() * 10);
+          y = Math.floor(Math.random() * 10);
+
+        } while (
+          x + ship[i].size > 10 ||
+          !canPlaceShipEnemy(x, y, ship[i].size, coordinate)
+        );
+
+        for (let j = 0; j < ship[i].size; j++) {
+          enemyBoard[x + j][y] = 1;
+        }
+
+      } else {
+
+        do {
+          x = Math.floor(Math.random() * 10);
+          y = Math.floor(Math.random() * 10);
+
+        } while (
+          y + ship[i].size > 10 ||
+          !canPlaceShipEnemy(x, y, ship[i].size, coordinate)
+        );
+
+        for (let j = 0; j < ship[i].size; j++) {
+          enemyBoard[x][y + j] = 1;
+        }
+      }
+    }
+
+    setEnemyBoard([...enemyBoard]);
+  }
+
+
+
+  function canPlaceShipEnemy(x, y, size, coordinate) {
+
+    for (let j = 0; j < size; j++) {
+
+      if (coordinate === 0) {
+
+        if (enemyBoard[x + j][y] !== 0) {
+          return false;
+        }
+
+        if (!checkAroundEnemy(x + j, y)) {
+          return false;
+        }
+
+      } else {
+
+        if (enemyBoard[x][y + j] !== 0) {
+          return false;
+        }
+
+        if (!checkAroundEnemy(x, y + j)) {
+          return false;
+        }
+
+      }
+    }
+
+    return true;
+  }
+
+
+  function checkAroundEnemy(x, y) {
+
+    if (x > 0 && enemyBoard[x - 1][y] === 1) {
+      return false;
+    }
+
+    if (x < 9 && enemyBoard[x + 1][y] === 1) {
+      return false;
+    }
+
+    if (y > 0 && enemyBoard[x][y - 1] === 1) {
+      return false;
+    }
+
+    if (y < 9 && enemyBoard[x][y + 1] === 1) {
+      return false;
+    }
+
+    return true;
+  }
+
 
   useEffect(() => {
     PlayerBoard();
@@ -114,10 +245,20 @@ function canPlaceShip(x, y, size, coordinate) {
   }, []);
 
   useEffect(() => {
-    if (playerBoard.length === 10) {
-      placeShips();
+    if (playerBoard.length === 10 && enemyBoard.length === 10 && !shipsPlaced) {
+      placeShipsPlayer();
+      placeShipsEnemy();
+      setShipsPlaced(true);
     }
-  }, [playerBoard]);
+  }, [playerBoard, enemyBoard]);
+
+  const [Hit, setHits] = useState([]);
+  function HitShipEnemy(i, cell) {
+    if (cell === 1) {
+      setHits(prev => [...prev, i]);
+
+    }
+  }
 
   return (
 
@@ -127,7 +268,7 @@ function canPlaceShip(x, y, size, coordinate) {
         <h1>Plansza Przeciwnika</h1>
         <div className='enemyBoard'>
           {enemyBoard.flat().map((cell, i) => (
-            <span key={i}></span>
+            <span key={i} onClick={() => HitShipEnemy(i, cell)} style={{ background: Hit.includes(i) ? "red" : "" }}></span>
           ))}
         </div>
       </div>
@@ -136,7 +277,9 @@ function canPlaceShip(x, y, size, coordinate) {
         <h1>Plansza Gracza</h1>
         <div className='playerBoard'>
           {playerBoard.flat().map((cell, i) => (
-            <span key={i}></span>
+            <span key={i} style={{ background: cell == 1 ? "rgb(13, 82, 13)" : "" }}>
+              {cell == 1 ? <span className='chimney' style={{ width: "22px", height: "22px", background: "gray", borderRadius: '10px' }}></span> : ""}
+            </span>
           ))}
         </div>
       </div>
