@@ -1,11 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './Game.css'
 import waves from '/public/waves.mp4';
+import splash from '/public/splash.mp3';
+import canonShot from '/public/canonShot.mp3';
 
 export default function Game() {
   const [playerBoard, setPlayerBoard] = useState([])
   const [enemyBoard, setEnemyBoard] = useState([])
   const [shipsPlaced, setShipsPlaced] = useState(false);
+  const [HitPlayer, setHitsPlayer] = useState([]);
+  const [flopPlayer, setFlopPlayer] = useState([]);
+  const [TimeOut, setTimeOut] = useState(false);
 
   const [ship, setShip] = useState([
     { name: "carrier", size: 5 },
@@ -252,12 +257,27 @@ export default function Game() {
     }
   }, [playerBoard, enemyBoard]);
 
-  const [Hit, setHits] = useState([]);
-  function HitShipEnemy(i, cell) {
-    if (cell === 1) {
-      setHits(prev => [...prev, i]);
 
+  const splashRef = useRef(new Audio(splash));
+  const canonShotRef = useRef(new Audio(canonShot));
+  function HitShipEnemy(i, cell) {
+    if (HitPlayer.includes(i) || flopPlayer.includes(i)) {
+      return; 
     }
+    if (cell === 1) {
+      canonShotRef.current.currentTime = 0;
+      canonShotRef.current.play();
+      setHitsPlayer(prev => [...prev, i]);
+    } if (cell == 0) {
+      splashRef.current.currentTime = 0;
+      splashRef.current.play();
+      setFlopPlayer(prev => [...prev, i])
+    }
+    setTimeOut(true);
+    setTimeout(() => {
+      setTimeOut(false);
+    }, 2000);
+
   }
 
   return (
@@ -266,9 +286,9 @@ export default function Game() {
       <video autoPlay autoPlay loop playsInline muted width="100%" src={waves} />
       <div className='Enemy'>
         <h1>Plansza Przeciwnika</h1>
-        <div className='enemyBoard'>
+        <div className='enemyBoard' style={{ pointerEvents: TimeOut ? "none" : "auto" }}>
           {enemyBoard.flat().map((cell, i) => (
-            <span key={i} onClick={() => HitShipEnemy(i, cell)} style={{ background: Hit.includes(i) ? "red" : "" }}></span>
+            <span key={i} onClick={() => HitShipEnemy(i, cell)} style={{ background: HitPlayer.includes(i) ? "red" : flopPlayer.includes(i) ? "rgb(85, 85, 236)" : "" }}></span>
           ))}
         </div>
       </div>
