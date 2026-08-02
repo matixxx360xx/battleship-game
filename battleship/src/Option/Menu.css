@@ -12,13 +12,13 @@
      --gold-a: #e8c874;
      --gold-b: #8a6420;
      --gold-line: #3f2c10;
- }
+}
 
 * {
      margin: 0;
      padding: 0;
      box-sizing: border-box;
- }
+}
 
 html,
 body {
@@ -29,14 +29,14 @@ body {
 
 
 video {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-items: center;
-    min-width: 100%;
-    height: 100%;
-    object-fit: cover;
+     position: absolute;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     justify-items: center;
+     min-width: 100%;
+     height: 100%;
+     object-fit: cover;
 }
 
 .scene {
@@ -44,8 +44,8 @@ video {
      width: 100%;
      height: 100vh;
      min-height: 560px;
-  
- }
+
+}
 
 .stage {
      position: relative;
@@ -63,12 +63,12 @@ video {
      max-width: 88%;
      padding: 52px 64px 48px;
      background:
-         radial-gradient(ellipse at 20% 10%, rgba(255, 255, 255, .35), transparent 55%),
-         radial-gradient(ellipse at 85% 90%, rgba(0, 0, 0, .18), transparent 55%),
-         linear-gradient(160deg, var(--parchment-a), var(--parchment-b));
+          radial-gradient(ellipse at 20% 10%, rgba(255, 255, 255, .35), transparent 55%),
+          radial-gradient(ellipse at 85% 90%, rgba(0, 0, 0, .18), transparent 55%),
+          linear-gradient(160deg, var(--parchment-a), var(--parchment-b));
      clip-path: polygon(1.5% 6%, 12% 2%, 30% 4%, 55% 1%, 78% 3%, 96% 0.5%, 99% 12%,
-             98.5% 30%, 100% 48%, 99% 68%, 100% 85%, 97% 98%, 80% 96%,
-             60% 99%, 38% 97%, 18% 100%, 2% 94%, 3.5% 78%, 0% 55%, 2.5% 34%, 0.5% 18%);
+               98.5% 30%, 100% 48%, 99% 68%, 100% 85%, 97% 98%, 80% 96%,
+               60% 99%, 38% 97%, 18% 100%, 2% 94%, 3.5% 78%, 0% 55%, 2.5% 34%, 0.5% 18%);
      box-shadow: 0 30px 60px rgba(0, 0, 0, .45);
 }
 
@@ -96,7 +96,7 @@ h1 {
      height: 2px;
      margin: 14px auto 34px;
      background: linear-gradient(90deg, transparent, var(--gold-b), transparent);
- }
+}
 
 nav {
      display: flex;
@@ -124,12 +124,12 @@ nav {
      align-items: center;
      justify-content: center;
      background:
-         radial-gradient(circle at 32% 28%, #f4dfa0, var(--gold-a) 40%, var(--gold-b) 88%);
+          radial-gradient(circle at 32% 28%, #f4dfa0, var(--gold-a) 40%, var(--gold-b) 88%);
      border: 2px solid var(--gold-line);
      box-shadow:
-         inset 0 2px 3px rgba(255, 255, 255, .5),
-         inset 0 -3px 5px rgba(0, 0, 0, .35),
-         0 2px 4px rgba(0, 0, 0, .4);
+          inset 0 2px 3px rgba(255, 255, 255, .5),
+          inset 0 -3px 5px rgba(0, 0, 0, .35),
+          0 2px 4px rgba(0, 0, 0, .4);
 }
 
 .badge svg {
@@ -158,11 +158,85 @@ nav {
      color: var(--gold-b);
      text-decoration-color: var(--gold-b);
      transform: translateX(3px);
- }
+}
 
 .item:hover .badge {
      box-shadow:
-         inset 0 2px 3px rgba(255, 255, 255, .6),
-         inset 0 -3px 5px rgba(0, 0, 0, .35),
-         0 0 10px 2px rgba(232, 200, 116, .7);
+          inset 0 2px 3px rgba(255, 255, 255, .6),
+          inset 0 -3px 5px rgba(0, 0, 0, .35),
+          0 0 10px 2px rgba(232, 200, 116, .7);
+}
+
+
+.bottle-slider {
+     position: relative;
+     width: 55px;
+     height: 160px;
+     transform: rotate(90deg);
+     right: -60px;
+     background: #d8b87a;
+     border: 4px solid #5b3a1a;
+     border-radius: 15px 15px 25px 25px;
+
+     box-shadow:
+          inset 0 0 15px rgba(0, 0, 0, .4),
+          0 5px 15px rgba(0, 0, 0, .5);
+}
+
+
+
+.bottle-slider::before {
+     content: "";
+     position: absolute;
+
+     top: -43px;
+     left: 10px;
+
+     width: 20px;
+     height: 40px;
+
+     background: #c79b58;
+     border: 4px solid #5b3a1a;
+     border-bottom: none;
+
+     border-radius: 10px 10px 0 0;
+}
+
+
+.bottle-fill {
+     position: absolute;
+     bottom: 0;
+     left: 0;
+     width: 100%;
+     border-radius: 10px 10px 21px 21px;
+     background:
+          linear-gradient(to top,
+               #7a3f12,
+               #c87920);
+
+     transition: height .2s ease;
+}
+
+
+
+.bottle-slider input {
+     position: absolute;
+     width: 160px;
+     height: 55px;
+     transform: rotate(-90deg);
+     left: -53px;
+     top: 50px;
+     opacity: 0;
+
+}
+
+.bottle-volume {
+     position: absolute;
+     bottom: 30px;
+     left:8px;
+     transform:rotate(-90deg);
+
+     font-weight: 600;
+     font-size: 1.2rem;
+     color: var(--ink);
 }

@@ -33,7 +33,7 @@ export default function Menu() {
           <span className="badge">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7 V19 M6 13 H18 M5 13 Q5 19 12 20 Q19 19 19 13"/></svg>
           </span>
-          <span className="label">Opcje</span>
+          <span className="label" onClick={() => navigate("/options")}>Opcje</span>
         </button>
 
         <button className="item">

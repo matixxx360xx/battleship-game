@@ -1,0 +1,26 @@
+import { useEffect, useRef } from "react";
+import Song1 from "/public/Song1.mp3";
+
+export default function Music({ loopMusic, musicVolume }) {
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio(Song1);
+    }
+
+    const audio = audioRef.current;
+
+    audio.loop = loopMusic;
+    audio.volume = musicVolume;
+    if (loopMusic) {
+      audio.play();
+    } else {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
+  }, [loopMusic, musicVolume]);
+
+  return null;
+}

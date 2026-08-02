@@ -4,7 +4,7 @@ import waves from '/public/waves.mp4';
 import splash from '/public/splash.mp3';
 import canonShot from '/public/canonShot.mp3';
 
-export default function Game() {
+export default function Game({ loopMusic }) {
   const [playerBoard, setPlayerBoard] = useState([])
   const [enemyBoard, setEnemyBoard] = useState([])
   const [shipsPlaced, setShipsPlaced] = useState(false);
@@ -262,7 +262,7 @@ export default function Game() {
   const canonShotRef = useRef(new Audio(canonShot));
   function HitShipEnemy(i, cell) {
     if (HitPlayer.includes(i) || flopPlayer.includes(i)) {
-      return; 
+      return;
     }
     if (cell === 1) {
       canonShotRef.current.currentTime = 0;
@@ -279,6 +279,9 @@ export default function Game() {
     }, 2000);
 
   }
+
+
+
 
   return (
 
