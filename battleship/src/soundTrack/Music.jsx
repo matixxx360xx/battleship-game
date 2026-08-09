@@ -15,6 +15,7 @@ export default function Music({ loopMusic, musicVolume }) {
     audio.volume = musicVolume;
     if (loopMusic) {
       audio.play();
+      
     } else {
       audio.pause();
       audio.currentTime = 0;

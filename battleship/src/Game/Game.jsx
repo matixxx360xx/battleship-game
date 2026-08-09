@@ -1,16 +1,25 @@
 import { useState, useEffect, useRef } from 'react'
+import { useNavigate } from "react-router-dom";
 import './Game.css'
 import waves from '/public/waves.mp4';
 import splash from '/public/splash.mp3';
 import canonShot from '/public/canonShot.mp3';
 
-export default function Game({ loopMusic }) {
+export default function Game({ sfxVolume }) {
+  const navigate = useNavigate();
+
   const [playerBoard, setPlayerBoard] = useState([])
   const [enemyBoard, setEnemyBoard] = useState([])
   const [shipsPlaced, setShipsPlaced] = useState(false);
   const [HitPlayer, setHitsPlayer] = useState([]);
+  const [HitBot, setHitBot] = useState([]);
   const [flopPlayer, setFlopPlayer] = useState([]);
+  const [flopBot, setFlopBot] = useState([])
   const [TimeOut, setTimeOut] = useState(false);
+  const [PlayerPkt, setPlayerPkt] = useState(0);
+  const [BotPkt, setBotPkt] = useState(0);
+  const [showEnd, setShowEnd] = useState(false);
+  const [win, setWin] = useState(null);
 
   const [ship, setShip] = useState([
     { name: "carrier", size: 5 },
@@ -265,10 +274,14 @@ export default function Game({ loopMusic }) {
       return;
     }
     if (cell === 1) {
+      canonShotRef.current.volume = sfxVolume;
       canonShotRef.current.currentTime = 0;
       canonShotRef.current.play();
       setHitsPlayer(prev => [...prev, i]);
+      setPlayerPkt(prev => prev + 1)
     } if (cell == 0) {
+
+      splashRef.current.volume = sfxVolume;
       splashRef.current.currentTime = 0;
       splashRef.current.play();
       setFlopPlayer(prev => [...prev, i])
@@ -278,11 +291,48 @@ export default function Game({ loopMusic }) {
       setTimeOut(false);
     }, 2000);
 
+    setTimeout(() => {
+      HitShipPlayer()
+    }, 2000)
   }
 
+  function HitShipPlayer() {
+    let x;
+    let y;
+    let i;
+    let cell;
 
+    do {
+      x = Math.floor(Math.random() * 10);
+      y = Math.floor(Math.random() * 10);
 
+      i = x * 10 + y;
+      cell = playerBoard[x][y];
+    } while (HitBot.includes(i) || flopBot.includes(i));
 
+    if (cell === 1) {
+      setHitBot(prev => [...prev, i]);
+      setBotPkt(prev => prev + 1)
+      canonShotRef.current.volume = sfxVolume;
+      canonShotRef.current.currentTime = 0;
+      canonShotRef.current.play();
+    } else {
+      splashRef.current.volume = sfxVolume;
+      splashRef.current.currentTime = 0;
+      splashRef.current.play();
+      setFlopBot(prev => [...prev, i]);
+    }
+  }
+
+  useEffect(() => {
+    if (PlayerPkt >= 17) {
+      setWin(true);
+      setShowEnd(true);
+    } else if (BotPkt >= 17) {
+      setWin(false);
+      setShowEnd(true);
+    }
+  }, [PlayerPkt, BotPkt]);
   return (
 
     <div className="scene">
@@ -300,11 +350,15 @@ export default function Game({ loopMusic }) {
         <h1>Plansza Gracza</h1>
         <div className='playerBoard'>
           {playerBoard.flat().map((cell, i) => (
-            <span key={i} style={{ background: cell == 1 ? "rgb(13, 82, 13)" : "" }}>
+            <span key={i} style={{ background: HitBot.includes(i) ? "red" : flopBot.includes(i) ? "rgb(85, 85, 236)" : cell == 1 ? "rgb(13, 82, 13)" : "" }}>
               {cell == 1 ? <span className='chimney' style={{ width: "22px", height: "22px", background: "gray", borderRadius: '10px' }}></span> : ""}
             </span>
           ))}
         </div>
+      </div>
+      <div className='Result' style={{display: showEnd ? "block" :"none"}}>
+        <h1>{win ? "Wygrałeś" : "Przegrałeś"}</h1>
+       <h1> <button style={{width: "400px", height: "100px", pointerEvents: "auto", marginTop: "100px", fontSize: "1.5rem"}} onClick={() => navigate("/")}>Wróć do menu głównego</button></h1>
       </div>
     </div>
   );

@@ -6,8 +6,9 @@ import Options from "./Option/Options.jsx";
 import Game from "./Game/Game.jsx";
 import Music from "./soundTrack/Music.jsx";
 function App() {
-  const [loopMusic, setLoopMusic] = useState(false);
+  const [loopMusic, setLoopMusic] = useState(true);
   const [musicVolume, setMusicVolume] = useState(1);
+  const [sfxVolume, setSfxVolume] = useState(1)
 
   return (
    <>
@@ -17,11 +18,11 @@ function App() {
         <Route path="/" element={<Menu />} />
         <Route 
           path="/game" 
-          element={<Game />}
+          element={<Game sfxVolume={sfxVolume} />}
         />
         <Route 
           path="/options" 
-          element={<Options setLoopMusic={setLoopMusic} setMusicVolume={setMusicVolume} loopMusic={loopMusic} musicVolume={musicVolume} />}
+          element={<Options setLoopMusic={setLoopMusic} setMusicVolume={setMusicVolume} setSfxVolume={setSfxVolume} loopMusic={loopMusic} musicVolume={musicVolume} sfxVolume={sfxVolume} />}
         />
       </Routes>
     </>

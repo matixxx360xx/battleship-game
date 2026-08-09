@@ -70,3 +70,23 @@
      left: 25%;
      top: 25%;
 }
+
+.Result {
+     width: 1000px;
+     height: 600px;
+     padding: 52px 64px 48px;
+     background:
+          radial-gradient(ellipse at 20% 10%, rgba(255, 255, 255, .35), transparent 55%),
+          radial-gradient(ellipse at 85% 90%, rgba(0, 0, 0, .18), transparent 55%),
+          linear-gradient(160deg, var(--parchment-a), var(--parchment-b));
+     clip-path: polygon(1.5% 6%, 12% 2%, 30% 4%, 55% 1%, 78% 3%, 96% 0.5%, 99% 12%,
+               98.5% 30%, 100% 48%, 99% 68%, 100% 85%, 97% 98%, 80% 96%,
+               60% 99%, 38% 97%, 18% 100%, 2% 94%, 3.5% 78%, 0% 55%, 2.5% 34%, 0.5% 18%);
+     box-shadow: 0 30px 60px rgba(0, 0, 0, .45);
+     position: absolute;
+     pointer-events: none;
+     z-index: 1000;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);   
+}
