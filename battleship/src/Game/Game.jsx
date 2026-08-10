@@ -18,7 +18,7 @@ export default function Game({ sfxVolume }) {
   const [TimeOut, setTimeOut] = useState(false);
   const [PlayerPkt, setPlayerPkt] = useState(0);
   const [BotPkt, setBotPkt] = useState(0);
-  const [showEnd, setShowEnd] = useState(false);
+  const [showEnd, setShowEnd] = useState(true);
   const [win, setWin] = useState(null);
 
   const [ship, setShip] = useState([
@@ -339,14 +339,14 @@ export default function Game({ sfxVolume }) {
       <video autoPlay autoPlay loop playsInline muted width="100%" src={waves} />
       <div className='Enemy'>
         <h1>Plansza Przeciwnika</h1>
-        <div className='enemyBoard' style={{ pointerEvents: TimeOut ? "none" : "auto" }}>
+        <div className='enemyBoard' style={{ pointerEvents: TimeOut ? "none" : "auto" }} style={{ pointerEvents: showEnd ? "none" : "auto" }}>
           {enemyBoard.flat().map((cell, i) => (
             <span key={i} onClick={() => HitShipEnemy(i, cell)} style={{ background: HitPlayer.includes(i) ? "red" : flopPlayer.includes(i) ? "rgb(85, 85, 236)" : "" }}></span>
           ))}
         </div>
       </div>
 
-      <div className='Player'>
+      <div className='Player' style={{ pointerEvents: showEnd ? "none" : "auto" }}>
         <h1>Plansza Gracza</h1>
         <div className='playerBoard'>
           {playerBoard.flat().map((cell, i) => (
@@ -356,9 +356,16 @@ export default function Game({ sfxVolume }) {
           ))}
         </div>
       </div>
-      <div className='Result' style={{display: showEnd ? "block" :"none"}}>
+      <div className='Result' style={{ display: showEnd ? "block" : "none" }}>
         <h1>{win ? "Wygrałeś" : "Przegrałeś"}</h1>
-       <h1> <button style={{width: "400px", height: "100px", pointerEvents: "auto", marginTop: "100px", fontSize: "1.5rem"}} onClick={() => navigate("/")}>Wróć do menu głównego</button></h1>
+        <div className="bottle" onClick={() => navigate(0)} >
+          <div className="bottle-fill"></div>
+          <div className='bottle-text'>Zagraj Ponownie</div>
+        </div>
+         <div className="bottle2" onClick={() => navigate("/")} >
+          <div className="bottle-fill2"></div>
+          <div className='bottle-text2'>Wyjdź</div>
+        </div>
       </div>
     </div>
   );
