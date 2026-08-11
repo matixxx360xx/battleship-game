@@ -50,7 +50,7 @@ export default function Menu() {
           <span className="badge">
             <svg viewBox="0 0 24 24"><path d="M4 5 Q9 3 12 6 Q15 3 20 5 V18 Q15 16 12 19 Q9 16 4 18 Z"/><path d="M12 6 V19"/></svg>
           </span>
-          <span className="label" onMouseEnter={handleHover}>Poradnik</span>
+          <span className="label" onClick={() => navigate("/guide")} onMouseEnter={handleHover}>Poradnik</span>
         </button>
 
         <button className="item">

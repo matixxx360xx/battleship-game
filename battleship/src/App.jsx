@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Menu from "./Option/Menu.jsx";
 import Options from "./Option/Options.jsx";
 import Game from "./Game/Game.jsx";
+import Guide from "./Option/Guide.jsx";
 import Music from "./soundTrack/Music.jsx";
 function App() {
   const [loopMusic, setLoopMusic] = useState(true);
@@ -23,6 +24,9 @@ function App() {
         <Route 
           path="/options" 
           element={<Options setLoopMusic={setLoopMusic} setMusicVolume={setMusicVolume} setSfxVolume={setSfxVolume} loopMusic={loopMusic} musicVolume={musicVolume} sfxVolume={sfxVolume} />}
+        />
+        <Route path="/guide"
+        element={<Guide sfxVolume={sfxVolume}/>}
         />
       </Routes>
     </>

@@ -18,7 +18,7 @@ export default function Game({ sfxVolume }) {
   const [TimeOut, setTimeOut] = useState(false);
   const [PlayerPkt, setPlayerPkt] = useState(0);
   const [BotPkt, setBotPkt] = useState(0);
-  const [showEnd, setShowEnd] = useState(true);
+  const [showEnd, setShowEnd] = useState(false);
   const [win, setWin] = useState(null);
 
   const [ship, setShip] = useState([
@@ -328,9 +328,11 @@ export default function Game({ sfxVolume }) {
     if (PlayerPkt >= 17) {
       setWin(true);
       setShowEnd(true);
+      setTimeOut(true);
     } else if (BotPkt >= 17) {
       setWin(false);
       setShowEnd(true);
+      setTimeOut(true);
     }
   }, [PlayerPkt, BotPkt]);
   return (
@@ -339,7 +341,7 @@ export default function Game({ sfxVolume }) {
       <video autoPlay autoPlay loop playsInline muted width="100%" src={waves} />
       <div className='Enemy'>
         <h1>Plansza Przeciwnika</h1>
-        <div className='enemyBoard' style={{ pointerEvents: TimeOut ? "none" : "auto" }} style={{ pointerEvents: showEnd ? "none" : "auto" }}>
+        <div className='enemyBoard' style={{ pointerEvents: TimeOut ? "none" : "auto" }}>
           {enemyBoard.flat().map((cell, i) => (
             <span key={i} onClick={() => HitShipEnemy(i, cell)} style={{ background: HitPlayer.includes(i) ? "red" : flopPlayer.includes(i) ? "rgb(85, 85, 236)" : "" }}></span>
           ))}
