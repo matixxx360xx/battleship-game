@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import Song1 from "/public/Song1.mp3";
+import Song1 from "/Song1.mp3";
 
 export default function Music({ loopMusic, musicVolume }) {
   const audioRef = useRef(null);

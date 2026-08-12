@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from "react-router-dom";
 import './Game.css'
-import waves from '/public/waves.mp4';
-import splash from '/public/splash.mp3';
-import canonShot from '/public/canonShot.mp3';
+import waves from '/waves.mp4';
+import splash from '/splash.mp3';
+import canonShot from '/canonShot.mp3';
 
 export default function Game({ sfxVolume }) {
   const navigate = useNavigate();

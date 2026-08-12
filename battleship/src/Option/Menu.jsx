@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from "react-router-dom";
 import './Menu.css'
-import waves from '/public/waves.mp4';
-import rustle from '/public/rustle.mp3';
+import waves from '/waves.mp4';
+import rustle from '/rustle.mp3';
 
 export default function Menu() {
   const navigate = useNavigate();
