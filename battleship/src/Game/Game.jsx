@@ -1,12 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from "react-router-dom";
 import './Game.css'
-import waves from '/waves.mp4';
-import splash from '/splash.mp3';
-import canonShot from '/canonShot.mp3';
+
 
 export default function Game({ sfxVolume }) {
   const navigate = useNavigate();
+  const splashRef = useRef(
+    new Audio(`${import.meta.env.BASE_URL}splash.mp3`)
+  );
+
+  const canonShotRef = useRef(
+    new Audio(`${import.meta.env.BASE_URL}canonShot.mp3`)
+  );
 
   const [playerBoard, setPlayerBoard] = useState([])
   const [enemyBoard, setEnemyBoard] = useState([])
@@ -267,8 +272,6 @@ export default function Game({ sfxVolume }) {
   }, [playerBoard, enemyBoard]);
 
 
-  const splashRef = useRef(new Audio(splash));
-  const canonShotRef = useRef(new Audio(canonShot));
   function HitShipEnemy(i, cell) {
     if (HitPlayer.includes(i) || flopPlayer.includes(i)) {
       return;
@@ -338,7 +341,7 @@ export default function Game({ sfxVolume }) {
   return (
 
     <div className="scene">
-      <video autoPlay autoPlay loop playsInline muted width="100%" src={waves} />
+      <video autoPlay autoPlay loop playsInline muted width="100%" src={`${import.meta.env.BASE_URL}waves.mp4`} />
       <div className='Enemy'>
         <h1>Plansza Przeciwnika</h1>
         <div className='enemyBoard' style={{ pointerEvents: TimeOut ? "none" : "auto" }}>
@@ -364,7 +367,7 @@ export default function Game({ sfxVolume }) {
           <div className="bottle-fill"></div>
           <div className='bottle-text'>Zagraj Ponownie</div>
         </div>
-         <div className="bottle2" onClick={() => navigate("/")} >
+        <div className="bottle2" onClick={() => navigate("/")} >
           <div className="bottle-fill2"></div>
           <div className='bottle-text2'>Wyjdź</div>
         </div>

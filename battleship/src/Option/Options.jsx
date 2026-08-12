@@ -2,13 +2,14 @@ import { useState, useRef } from 'react'
 import { useNavigate } from "react-router-dom";
 import './Menu.css'
 
-import waves from '/waves.mp4';
-import rustle from '/rustle.mp3';
+
 
 export default function Options({ setLoopMusic, setMusicVolume, setSfxVolume, loopMusic, musicVolume, sfxVolume }) {
     const navigate = useNavigate();
 
-    const audioRef = useRef(new Audio(rustle));
+    const audioRef = useRef(
+        new Audio(`${import.meta.env.BASE_URL}rustle.mp3`)
+    );
 
     function handleHover() {
         audioRef.current.currentTime = 0;
@@ -18,7 +19,7 @@ export default function Options({ setLoopMusic, setMusicVolume, setSfxVolume, lo
     return (
 
         <div className="scene">
-            <video autoPlay autoPlay loop playsInline muted width="100%" src={waves} />
+            <video autoPlay autoPlay loop playsInline muted width="100%" src={`${import.meta.env.BASE_URL}waves.mp4`} />
             <div className="stage">
                 <div className="parchment">
                     <h1>BITWA MORSKA</h1>

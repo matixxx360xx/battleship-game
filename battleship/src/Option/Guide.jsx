@@ -1,14 +1,13 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from "react-router-dom";
-import './Menu.css'
-
-import waves from '/waves.mp4';
-import rustle from '/rustle.mp3';
+import './Menu.css';
 
 export default function Guide({ sfxVolume }) {
     const navigate = useNavigate();
 
-    const audioRef = useRef(new Audio(rustle));
+    const audioRef = useRef(
+        new Audio(`${import.meta.env.BASE_URL}rustle.mp3`)
+    );
 
     function handleHover() {
         audioRef.current.currentTime = 0;
@@ -18,7 +17,7 @@ export default function Guide({ sfxVolume }) {
     return (
 
         <div className="scene">
-            <video autoPlay autoPlay loop playsInline muted width="100%" src={waves} />
+            <video autoPlay autoPlay loop playsInline muted width="100%" src={`${import.meta.env.BASE_URL}waves.mp4`} />
             <div className="stage">
                 <div className="parchment">
                     <h1>BITWA MORSKA</h1>
@@ -29,7 +28,7 @@ export default function Guide({ sfxVolume }) {
                             <span>Twoim zadaniem jest zatopienie całej floty przeciwnika, zanim komputer zatopi Twoje statki.</span>
 
                             <h2>Twoja flota</h2>
-                            <span>Na początku gry Twoje statki są automatycznie rozmieszczane na planszy.<br/><br/>Flota składa się z:</span>
+                            <span>Na początku gry Twoje statki są automatycznie rozmieszczane na planszy.<br /><br />Flota składa się z:</span>
                             <ul>
                                 <li>Lotniskowiec — 5 pól</li>
                                 <li>Pancernik — 4 pola</li>
@@ -43,10 +42,10 @@ export default function Guide({ sfxVolume }) {
                             <span>Kliknij wybrane pole na planszy przeciwnika, aby oddać strzał.</span>
 
                             <h2>Trafienie</h2>
-                            <span>Jeżeli na wybranym polu znajduje się statek, pole zmieni kolor na <strong style={{color:"red"}}>czerwony.</strong></span>
+                            <span>Jeżeli na wybranym polu znajduje się statek, pole zmieni kolor na <strong style={{ color: "red" }}>czerwony.</strong></span>
 
                             <h2>Pudło</h2>
-                            <span>Jeżeli na polu nie ma statku, zobaczysz <strong style={{color:"rgb(85, 85, 236)"}}>niebieskie</strong> pole.</span>
+                            <span>Jeżeli na polu nie ma statku, zobaczysz <strong style={{ color: "rgb(85, 85, 236)" }}>niebieskie</strong> pole.</span>
 
                             <h2>Zwycięstwo</h2>
                             <span>Musisz zdobyć 17 trafień, aby zatopić całą flotę przeciwnika.</span>
@@ -55,7 +54,7 @@ export default function Guide({ sfxVolume }) {
                             <span className="badge">
                                 <svg viewBox="0 0 24 24"><rect x="5" y="3" width="12" height="18" rx="1" /><circle cx="14" cy="12" r="1.2" fill="var(--gold-line)" /></svg>
                             </span>
-                            <span className="label"  onClick={() => navigate("/")} onMouseEnter={handleHover}>Wyjdź</span>
+                            <span className="label" onClick={() => navigate("/")} onMouseEnter={handleHover}>Wyjdź</span>
                         </button>
                     </nav>
                 </div>
