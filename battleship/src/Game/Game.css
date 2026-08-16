@@ -220,3 +220,151 @@
 .bottle2:hover .bottle-fill2{
      height: 100%;
 }
+
+@media (max-width: 1452px) {
+
+     .scene {
+          width: 100%;
+          min-height: 100vh;
+          height: auto;
+
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+          gap: 40px;
+          overflow-x: hidden;
+     }
+
+     .Player,
+     .Enemy {
+          position: relative;
+          top: 0;
+          left: 0;
+
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+     }
+
+     .Player h1,
+     .Enemy h1 {
+          font-size: 28px;
+          margin-bottom: 15px;
+     }
+
+     .playerBoard,
+     .enemyBoard {
+          width: min(90vw, 400px);
+          height: min(90vw, 400px);
+
+          border-width: 3px;
+     }
+
+     .playerBoard span,
+     .enemyBoard span {
+          border: 1px solid rgba(255, 255, 255, 0.3);
+     }
+
+
+     .Result {
+          width: 90vw;
+          height: auto;
+          min-height: 450px;
+
+          padding: 35px 25px;
+
+          top: 50%;
+          left: 50%;
+
+          transform: translate(-50%, -50%);
+     }
+
+     .bottle {
+          width: 65px;
+          height: 170px;
+
+          left: 50%;
+     }
+
+     .bottle::before {
+          top: -35px;
+          left: 15px;
+
+          width: 20px;
+          height: 32px;
+
+          border-width: 3px;
+     }
+
+     .bottle-text {
+          bottom: 60px;
+          left: -9px;
+
+          font-size: 1.2rem;
+     }
+
+     .bottle2 {
+          width: 65px;
+          height: 170px;
+
+          left: 50%;
+     }
+
+     .bottle2::before {
+          top: -35px;
+          left: 15px;
+
+          width: 20px;
+          height: 32px;
+
+          border-width: 3px;
+     }
+
+     .bottle-text2 {
+          bottom: 60px;
+          left: 2px;
+
+          font-size: 1.2rem;
+     }
+}
+
+@media (max-width: 480px) {
+
+     .scene {
+          gap: 30px;
+     }
+
+     .Player h1,
+     .Enemy h1 {
+          font-size: 24px;
+     }
+
+     .playerBoard,
+     .enemyBoard {
+          width: 94vw;
+          height: 94vw;
+     }
+
+     .Result {
+          width: 94vw;
+          min-height: 400px;
+          padding: 25px 15px;
+     }
+
+     .bottle {
+          width: 55px;
+          height: 145px;
+     }
+
+     .bottle2 {
+          width: 55px;
+          height: 145px;
+     }
+
+     .bottle-text,
+     .bottle-text2 {
+          font-size: 1rem;
+     }
+}
